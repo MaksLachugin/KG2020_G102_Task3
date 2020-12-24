@@ -57,8 +57,9 @@ public class DDALineDrawer implements LineDrawer {
         }
     }
 
-    public void setColor(Color color) {
-
+    @Override
+    public PixelDrawer getPD() {
+        return pd;
     }
 
 

@@ -1,6 +1,7 @@
 package ru.vsu.cs.kg2020.g102.lachugin_m_d.t3.functions;
 
 import ru.vsu.cs.kg2020.g102.lachugin_m_d.t3.ScreenConverter;
+import ru.vsu.cs.kg2020.g102.lachugin_m_d.t3.drawers.DDALineDrawer;
 import ru.vsu.cs.kg2020.g102.lachugin_m_d.t3.drawers.LineDrawer;
 import ru.vsu.cs.kg2020.g102.lachugin_m_d.t3.elements.Line;
 import ru.vsu.cs.kg2020.g102.lachugin_m_d.t3.points.RealPoint;
@@ -27,7 +28,7 @@ public abstract class IFunction {
     }
 
     public void draw(ScreenConverter sc, LineDrawer ld) {
-        ld.setColor(color);
+        ld = new DDALineDrawer(ld.getPD(), color);
         generationPoints(sc);
         if (!isEmpty()) {
             generationPoints(sc);
@@ -161,8 +162,8 @@ public abstract class IFunction {
                 List<ScreenPoint> screenPointList = new ArrayList<>();
                 for (RealPoint p : realPointListWave.get(i)
                 ) {
-                    if (p != null)
-                        screenPointList.add(sc.r2s(p));
+                    if (p !=null)
+                    screenPointList.add(sc.r2s(p));
                 }
                 points.add(screenPointList);
             }

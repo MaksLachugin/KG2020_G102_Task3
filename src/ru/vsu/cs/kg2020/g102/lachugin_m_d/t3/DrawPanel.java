@@ -49,7 +49,7 @@ public class DrawPanel extends JPanel implements MouseListener, MouseWheelListen
         sc.setsH(getHeight());
         BufferedImage bufferedImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_BGR);
         Graphics2D gr = bufferedImage.createGraphics();
-        gr.setColor(Color.WHITE);
+        gr.setColor(Color.LIGHT_GRAY);
         gr.fillRect(0, 0, getWidth(), getHeight());
         gr.dispose();
         PixelDrawer pd = new BufferedImagePixelDrawer(bufferedImage);
@@ -59,9 +59,8 @@ public class DrawPanel extends JPanel implements MouseListener, MouseWheelListen
         if (iFunctionList.isEmpty()) {
             genIFunction();
         }
-        for (IFunction x :
-                iFunctionList) {
-            x.draw(sc, ld);
+        for (int i= 0; i < 1; i++) {
+            iFunctionList.get(i).draw(sc, ld);
         }
 
         /**/
