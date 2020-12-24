@@ -2,19 +2,21 @@ package ru.vsu.cs.kg2020.g102.lachugin_m_d.t3;
 
 import ru.vsu.cs.kg2020.g102.lachugin_m_d.t3.drawers.*;
 import ru.vsu.cs.kg2020.g102.lachugin_m_d.t3.elements.Line;
+import ru.vsu.cs.kg2020.g102.lachugin_m_d.t3.functions.FunctionFactory;
 import ru.vsu.cs.kg2020.g102.lachugin_m_d.t3.functions.IFunction;
-import ru.vsu.cs.kg2020.g102.lachugin_m_d.t3.functions.PolinomPow3;
 import ru.vsu.cs.kg2020.g102.lachugin_m_d.t3.functions.SinCos;
-import ru.vsu.cs.kg2020.g102.lachugin_m_d.t3.functions.SinExp;
 import ru.vsu.cs.kg2020.g102.lachugin_m_d.t3.panel.Settings;
 import ru.vsu.cs.kg2020.g102.lachugin_m_d.t3.points.RealPoint;
 import ru.vsu.cs.kg2020.g102.lachugin_m_d.t3.points.ScreenPoint;
-import ru.vsu.cs.kg2020.g102.lachugin_m_d.t3.utils.matrix2;
+import ru.vsu.cs.kg2020.g102.lachugin_m_d.t3.utils.nameF;
+
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -22,17 +24,9 @@ public class DrawPanel extends JPanel implements MouseListener, MouseWheelListen
     private Line xAxis = new Line(-4, 0, 4, 0);
     private Line yAxis = new Line(0, -4, 0, 4);
     ScreenConverter sc = new ScreenConverter(-4, 4, 8, 8, getWidth(), getHeight());
-    Map<String, Double> paramF = new TreeMap<>();
 
-    private void setParamF(Map<String, Double> paramF) {
-        paramF.put("A", 1.);
-        paramF.put("B", 1.);
-        paramF.put("C", 1.);
-        paramF.put("D", 1.);
-
-
-    }
-
+    FunctionFactory FF = new FunctionFactory();
+    List<IFunction> iFunctionList = new ArrayList<>();
 
     private boolean isLeft = false;
     private boolean isRight = false;
@@ -51,9 +45,6 @@ public class DrawPanel extends JPanel implements MouseListener, MouseWheelListen
 
     @Override
     public void paint(Graphics g) {
-
-        setParamF(paramF);
-        IFunction function = new SinCos(paramF);
         sc.setsW(getWidth());
         sc.setsH(getHeight());
         BufferedImage bufferedImage = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_BGR);
@@ -62,23 +53,35 @@ public class DrawPanel extends JPanel implements MouseListener, MouseWheelListen
         gr.fillRect(0, 0, getWidth(), getHeight());
         gr.dispose();
         PixelDrawer pd = new BufferedImagePixelDrawer(bufferedImage);
-        LineDrawer ld = new DDALineDrawer(pd);
+        LineDrawer ld = new DDALineDrawer(pd, Color.black);
 
         /**/
+        if (iFunctionList.isEmpty()) {
+            genIFunction();
+        }
+        for (IFunction x :
+                iFunctionList) {
+            x.draw(sc, ld);
+        }
 
         /**/
         ld.drawLine(sc.r2s(xAxis.getP1()), sc.r2s(xAxis.getP2()));
         ld.drawLine(sc.r2s(yAxis.getP1()), sc.r2s(yAxis.getP2()));
         System.out.println(sc.s2r(new ScreenPoint(getX() / 2, getY() / 2)));
-        function.draw(sc, ld);
-        drawCells(sc, ld);
+//        drawCells(sc, ld);
         g.drawImage(bufferedImage, 0, 0, null);
     }
 
-    private void drawCells(ScreenConverter sc, LineDrawer ld){
-        RealPoint p1= new RealPoint(sc.getrX()- sc.getrW(), sc.getrY() + sc.getrH());
-        RealPoint p2= new RealPoint(sc.getrX()- sc.getrW(), sc.getrY() + sc.getrH()+2);
-        ld.drawLine(sc.r2s(p1),sc.r2s(p2));
+    private void genIFunction() {
+        for (nameF x : nameF.values()) {
+            this.iFunctionList.add(FF.getF(x));
+        }
+    }
+
+    private void drawCells(ScreenConverter sc, LineDrawer ld) {
+        RealPoint p1 = new RealPoint(sc.getrX() - sc.getrW(), sc.getrY() + sc.getrH());
+        RealPoint p2 = new RealPoint(sc.getrX() - sc.getrW(), sc.getrY() + sc.getrH() + 2);
+        ld.drawLine(sc.r2s(p1), sc.r2s(p2));
     }
 
     private RealPoint oldPoint;

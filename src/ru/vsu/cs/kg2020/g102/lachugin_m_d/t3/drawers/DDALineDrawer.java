@@ -6,9 +6,11 @@ import java.awt.*;
 
 public class DDALineDrawer implements LineDrawer {
     private PixelDrawer pd;
+    private Color color;
 
-    public DDALineDrawer(PixelDrawer pd) {
+    public DDALineDrawer(PixelDrawer pd, Color c) {
         this.pd = pd;
+        this.color = c;
     }
 
     @Override
@@ -32,7 +34,7 @@ public class DDALineDrawer implements LineDrawer {
             }
             for (int j = x1; j <= x2; j++) {
                 double i = k * (j - x1) + y1;
-                pd.drawPixel(j, (int) i, Color.red);
+                pd.drawPixel(j, (int) i, color);
             }
 
         } else {
@@ -48,7 +50,7 @@ public class DDALineDrawer implements LineDrawer {
             double k = dx / dy;
             for (int i = y1; i <= y2; i++) {
                 double j = (i - y1) * k + x1;
-                pd.drawPixel((int) j, i, Color.blue);
+                pd.drawPixel((int) j, i, color);
             }
 
 

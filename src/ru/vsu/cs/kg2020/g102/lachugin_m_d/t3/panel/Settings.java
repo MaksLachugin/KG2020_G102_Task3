@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Settings {
-    Object[] types = new nameF[] {nameF.Hyperbole, nameF.IvertExponent,nameF.PolinomPow3,nameF.Sin,nameF.SinCos, nameF.SinExp};
+    Object[] types = new nameF[] {nameF.Hyperbole, nameF.InvertExponent,nameF.PolinomPow3,nameF.Sin,nameF.SinCos, nameF.SinExp};
 
     private JPanel JPanelMain;
     private JButton buttonSave;

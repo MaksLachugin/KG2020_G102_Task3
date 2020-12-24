@@ -6,6 +6,7 @@ public class Hyperbole extends IFunction {
     //y = A / (B*x+D) + C
     private double A, B, C, D;
 
+
     Hyperbole(Map<String, Double> params) {
         super(params);
         A = this.params.getOrDefault("A", 1.);
@@ -13,6 +14,7 @@ public class Hyperbole extends IFunction {
         C = this.params.getOrDefault("C", 0.);
         D = this.params.getOrDefault("D", 0.);
     }
+
 
     @Override
     public double compute(double x) {

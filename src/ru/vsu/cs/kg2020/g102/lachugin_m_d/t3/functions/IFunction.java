@@ -6,11 +6,18 @@ import ru.vsu.cs.kg2020.g102.lachugin_m_d.t3.elements.Line;
 import ru.vsu.cs.kg2020.g102.lachugin_m_d.t3.points.RealPoint;
 import ru.vsu.cs.kg2020.g102.lachugin_m_d.t3.points.ScreenPoint;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public abstract class IFunction {
     List<List<ScreenPoint>> points = new ArrayList<>();
     protected Map<String, Double> params = new TreeMap<>();
+    protected Color color = Color.red;
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
 
     double step = 0.1;
 
@@ -20,6 +27,7 @@ public abstract class IFunction {
     }
 
     public void draw(ScreenConverter sc, LineDrawer ld) {
+        ld.setColor(color);
         generationPoints(sc);
         if (!isEmpty()) {
             generationPoints(sc);
@@ -153,8 +161,8 @@ public abstract class IFunction {
                 List<ScreenPoint> screenPointList = new ArrayList<>();
                 for (RealPoint p : realPointListWave.get(i)
                 ) {
-
-                    screenPointList.add(sc.r2s(p));
+                    if (p != null)
+                        screenPointList.add(sc.r2s(p));
                 }
                 points.add(screenPointList);
             }
